@@ -42,6 +42,7 @@ public class KeyCharMapper {
         keyCharMap.put(NativeKeyEvent.VC_Y, 'y');
         keyCharMap.put(NativeKeyEvent.VC_Z, 'z');
 
+        keyCharMap.put(NativeKeyEvent.VC_0, '0');
         keyCharMap.put(NativeKeyEvent.VC_1, '1');
         keyCharMap.put(NativeKeyEvent.VC_2, '2');
         keyCharMap.put(NativeKeyEvent.VC_3, '3');
