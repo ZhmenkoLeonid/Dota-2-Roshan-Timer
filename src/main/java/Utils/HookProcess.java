@@ -1,5 +1,6 @@
 package Utils;
 
+import Main.Config;
 import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinUser;
 
@@ -43,4 +44,5 @@ public class HookProcess implements WinUser.HOOKPROC {
         }
         return new WinDef.LRESULT(0);
     }
+
 }

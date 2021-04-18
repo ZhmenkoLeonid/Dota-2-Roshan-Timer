@@ -10,7 +10,6 @@ public class TextTransfer implements ClipboardOwner {
     public void lostOwnership(Clipboard clipboard, Transferable contents) {
 
     }
-
     public void setData(String data){
         stringSelection = new StringSelection(data);
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();

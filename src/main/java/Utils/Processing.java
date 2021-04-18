@@ -1,6 +1,8 @@
 package Utils;
+import Main.Config;
 
 public class Processing {
+    static Config cfg = null;
     public static String run(String str){
         int min = -1;
         int seconds = -1;
@@ -23,11 +25,22 @@ public class Processing {
         return buildString(str,min,seconds);
     }
     static String buildString(String str,int min,int seconds){
-        String roshan_Killed = WriteZeroIfMsgLenEq1(min) + ':' + WriteZeroIfMsgLenEq1(seconds);
-        String aegis = WriteZeroIfMsgLenEq1(min + 5) + ':' + WriteZeroIfMsgLenEq1(seconds);
-        String roshan_Recovery_minimum = WriteZeroIfMsgLenEq1(min + 8) + ':' + WriteZeroIfMsgLenEq1(seconds);
-        String roshan_Recovery_maximum = WriteZeroIfMsgLenEq1(min + 11) + ':' + WriteZeroIfMsgLenEq1(seconds);
-        return aegis+" "+roshan_Recovery_minimum+" "+roshan_Recovery_maximum;
+        String symbBetweenTime;
+        if (cfg.usingColon){
+            symbBetweenTime = ":";
+        } else {
+            symbBetweenTime = "";
+        }
+
+        String roshan_Killed = WriteZeroIfMsgLenEq1(min) + symbBetweenTime + WriteZeroIfMsgLenEq1(seconds);
+        String aegis = WriteZeroIfMsgLenEq1(min + 5) + symbBetweenTime + WriteZeroIfMsgLenEq1(seconds);
+        String roshan_Recovery_minimum = WriteZeroIfMsgLenEq1(min + 8) + symbBetweenTime
+                + WriteZeroIfMsgLenEq1(seconds);
+        String roshan_Recovery_maximum = WriteZeroIfMsgLenEq1(min + 11) + symbBetweenTime
+                + WriteZeroIfMsgLenEq1(seconds);
+
+        return cfg.stringBeforeAegisExpiredTime+aegis+cfg.stringBeforeRoshanRecoveryLeftTime+" "
+                +roshan_Recovery_minimum+cfg.stringBeforeRoshanRecoveryRightTime+" "+roshan_Recovery_maximum;
     }
     static String WriteZeroIfMsgLenEq1(int num){
         String resultStr = String.valueOf(num);
@@ -38,5 +51,9 @@ public class Processing {
     }
     static int intFromChar(char symb){
         return symb -'0';
+    }
+
+    public static void setConfig(Config conf){
+        cfg = conf;
     }
 }
