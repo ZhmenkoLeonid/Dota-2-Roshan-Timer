@@ -11,7 +11,6 @@ import java.io.IOException;
 
 public class HookProcess implements WinUser.HOOKPROC {
     Robot rb = new Robot();
-    Robot rb1 = new Robot();
     TextTransfer textTransfer = new TextTransfer();
     public HookProcess() throws AWTException {
     }
