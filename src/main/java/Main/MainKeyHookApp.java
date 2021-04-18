@@ -48,7 +48,7 @@ public class MainKeyHookApp {
         User32.HHOOK hHook = User32.INSTANCE.SetWindowsHookEx(User32.WH_KEYBOARD_LL, hookProc, hInst, 0);
         if (hHook == null)
             return;
-
+/*
         Thread flagCheckThread = new Thread(()-> {
             try {
                 flagCheck(fileFlag);
@@ -57,7 +57,7 @@ public class MainKeyHookApp {
             }
         });
         flagCheckThread.start();
-
+*/
         //ServletThread servletThread = new ServletThread();
         //servletThread.run();
         while (true) {
