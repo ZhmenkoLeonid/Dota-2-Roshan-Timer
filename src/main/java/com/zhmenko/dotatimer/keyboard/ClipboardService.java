@@ -1,15 +1,15 @@
-package Utils;
+package com.zhmenko.dotatimer.keyboard;
 
 import java.awt.*;
 import java.awt.datatransfer.*;
 import java.io.IOException;
 
-public class TextTransfer implements ClipboardOwner {
-    StringSelection stringSelection;
+public class ClipboardService implements ClipboardOwner {
+    private StringSelection stringSelection;
     @Override
     public void lostOwnership(Clipboard clipboard, Transferable contents) {
-
     }
+
     public void setData(String data){
         stringSelection = new StringSelection(data);
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
