@@ -8,6 +8,9 @@
     <artifactId>DotaTimer</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
+    <properties>
+        <fileName>Dota Timer</fileName>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -26,6 +29,11 @@
             <groupId>com.ibasco.agql</groupId>
             <artifactId>agql-dota2-webapi</artifactId>
             <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jgoodies</groupId>
+            <artifactId>forms</artifactId>
+            <version>1.2.1</version>
         </dependency>
 
         <dependency>
@@ -46,28 +54,60 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.13.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.akathist.maven.plugins.launch4j</groupId>
+            <artifactId>launch4j-maven-plugin</artifactId>
+            <version>2.1.2</version>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
+
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.1</version>
+                <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <transformers>
-                        <transformer
-                                implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                    <archive>
+                        <manifest>
                             <mainClass>com.zhmenko.dotatimer.main.MainKeyHookApp</mainClass>
-                        </transformer>
-                    </transformers>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <finalName>${fileName}</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
                         <goals>
-                            <goal>shade</goal>
+                            <goal>single</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.akathist.maven.plugins.launch4j</groupId>
+                <artifactId>launch4j-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>l4j-clui</id>
+                        <phase>package</phase>
+                        <goals><goal>launch4j</goal></goals>
+                        <configuration>
+                            <headerType>gui</headerType>
+                            <outfile>target/DotaTimer.exe</outfile>
+                            <jar>target/${fileName}.jar</jar>
+                            <classPath>
+                                <mainClass>com.zhmenko.dotatimer.main.MainKeyHookApp</mainClass>
+                            </classPath>
+                            <jre>
+                                <minVersion>1.5.0</minVersion>
+                            </jre>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

@@ -6,6 +6,7 @@ import com.zhmenko.dotatimer.fileflag.FlagThread;
 import com.zhmenko.dotatimer.gsi.DotaGSI;
 import com.zhmenko.dotatimer.keyboard.GlobalKeyboardListener;
 import com.zhmenko.dotatimer.keyboard.MessageConverter;
+import com.zhmenko.dotatimer.setting.Config;
 import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
@@ -19,16 +20,15 @@ public class ApplicationLifecycle {
         flagCheckThread.start();
     }
 
-    public void keyboardListenerInit(MessageConverter messageConverter, DotaGSI dotaGSI) throws AWTException {
+    public void keyboardListenerInit(Config config, DotaGSI dotaGSI) throws AWTException {
         try {
             GlobalScreen.registerNativeHook();
         } catch (NativeHookException ex) {
             log.error("There was a problem registering the native hook." + ex.getMessage());
-
             System.exit(1);
         }
 
-        GlobalScreen.addNativeKeyListener(new GlobalKeyboardListener(messageConverter,dotaGSI));
+        GlobalScreen.addNativeKeyListener(new GlobalKeyboardListener(config,dotaGSI));
     }
 
     public File getAppDirPath() throws URISyntaxException {

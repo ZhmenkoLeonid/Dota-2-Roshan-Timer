@@ -4,31 +4,21 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 
 import com.zhmenko.dotatimer.gsi.DotaGSI;
+import com.zhmenko.dotatimer.setting.Config;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public class GlobalKeyboardListener implements NativeKeyListener {
     private Robot rb;
-    private MessageConverter messageConverter;
-    private ClipboardService clipboardService;
-    private DotaGSI dotaGSI;
+    private final MessageConverter messageConverter;
+    private final ClipboardService clipboardService;
+    private final DotaGSI dotaGSI;
+    private final Config config;
 
-    private int operationDelay;
-
-    public GlobalKeyboardListener(MessageConverter messageConverter, DotaGSI dotaGSI) throws AWTException {
-        this.messageConverter = messageConverter;
-        this.operationDelay = 200;
+    public GlobalKeyboardListener(Config config, DotaGSI dotaGSI) throws AWTException {
+        this.messageConverter = new MessageConverter(config);
         this.dotaGSI = dotaGSI;
-
-        clipboardService = new ClipboardService();
-        rb = new Robot();
-    }
-
-    public GlobalKeyboardListener(MessageConverter messageConverter, int operationDelay) throws AWTException {
-        this.messageConverter = messageConverter;
-        this.operationDelay = operationDelay;
-
+        this.config = config;
         clipboardService = new ClipboardService();
         rb = new Robot();
     }
@@ -39,13 +29,16 @@ public class GlobalKeyboardListener implements NativeKeyListener {
 
     @Override
     public void nativeKeyPressed(NativeKeyEvent nativeEvent) {
-        if (nativeEvent.getKeyCode() == 0xe4e) {
-/*            // ctrl+a
+        // TODO нормальное соответствие кодов символов
+        System.out.println("raw:" + NativeKeyEvent.getModifiersText(nativeEvent.getModifiers()) +" char: "+  (int)config.getConfigProperties().getExecChar());
+
+        if (nativeEvent.getKeyCode() == 0xe4e || nativeEvent.getKeyCode() == NativeKeyEvent.VC_EQUALS) {
+/*          // ctrl+a
             rb.delay(operationDelay);
             rb.keyPress(KeyEvent.VK_CONTROL);
             rb.keyPress(KeyEvent.VK_A);
             rb.keyRelease(KeyEvent.VK_A);
-            rb.keyRelease(KeyEvent.VK_CONTROL);+
+            rb.keyRelease(KeyEvent.VK_CONTROL);
             //ctrl+c
             rb.keyPress(KeyEvent.VK_CONTROL);
             rb.keyPress(KeyEvent.VK_C);
@@ -60,13 +53,14 @@ public class GlobalKeyboardListener implements NativeKeyListener {
             // закидываем в буфер обмена
             clipboardService.setData(resultStr);
             //rb.delay(operationDelay);
+
             // ctrl+v
-            rb.keyPress(KeyEvent.VK_BACK_SPACE);
+/*            rb.keyPress(KeyEvent.VK_BACK_SPACE);
             rb.keyRelease(KeyEvent.VK_BACK_SPACE);
             rb.keyPress(KeyEvent.VK_CONTROL);
             rb.keyPress(KeyEvent.VK_V);
             rb.keyRelease(KeyEvent.VK_V);
-            rb.keyRelease(KeyEvent.VK_CONTROL);
+            rb.keyRelease(KeyEvent.VK_CONTROL);*/
         }
     }
 
