@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.zhmenko.dotatimer.gui.settings.frames.SettingsFrame">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.zhmenko.dotatimer.gui.frames.SettingsFrame">
   <grid id="27dc6" binding="settingsPanel" layout-manager="FormLayout">
     <rowspec value="center:d:noGrow"/>
     <rowspec value="top:4dlu:noGrow"/>
@@ -160,7 +160,7 @@
           <forms defaultalign-horz="false"/>
         </constraints>
       </hspacer>
-      <component id="cb2ff" class="com.zhmenko.dotatimer.gui.settings.frames.ExampleTextArea" binding="exampleOutputTextArea">
+      <component id="cb2ff" class="com.zhmenko.dotatimer.gui.frames.ExampleTextArea" binding="exampleOutputTextArea">
         <constraints>
           <grid row="20" column="0" row-span="1" col-span="19" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
@@ -190,7 +190,7 @@
         </constraints>
         <properties>
           <columns value="2"/>
-          <editable value="false"/>
+          <editable value="true"/>
           <horizontalAlignment value="0"/>
           <text value=""/>
         </properties>

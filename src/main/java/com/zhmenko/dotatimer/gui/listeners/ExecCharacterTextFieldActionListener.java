@@ -1,6 +1,5 @@
-package com.zhmenko.dotatimer.gui.settings.listeners;
+package com.zhmenko.dotatimer.gui.listeners;
 
-import com.zhmenko.dotatimer.gui.settings.frames.ExampleTextArea;
 import com.zhmenko.dotatimer.setting.ConfigProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -8,14 +7,14 @@ import lombok.SneakyThrows;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.Element;
-import java.awt.*;
-import java.text.MessageFormat;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.TextEvent;
+import java.awt.event.TextListener;
 
 @RequiredArgsConstructor
-public class BeforeAegisTextFieldActionListener implements DocumentListener {
+public class ExecCharacterTextFieldActionListener implements DocumentListener {
     private final ConfigProperties currentConfigProperties;
-    private final ExampleTextArea exampleOutputTextArea;
 
     @Override
     public void insertUpdate(DocumentEvent e) {
@@ -27,6 +26,7 @@ public class BeforeAegisTextFieldActionListener implements DocumentListener {
         action(e);
     }
 
+    @SneakyThrows
     @Override
     public void changedUpdate(DocumentEvent e) {
         action(e);
@@ -34,9 +34,7 @@ public class BeforeAegisTextFieldActionListener implements DocumentListener {
 
     @SneakyThrows
     private void action(DocumentEvent e) {
-        currentConfigProperties
-                .setStringBeforeAegisExpiredTime(e.getDocument().getText(0,e.getDocument().getLength()));
-
-        exampleOutputTextArea.updateTextAreaText(currentConfigProperties);
+        String text = e.getDocument().getText(0, e.getDocument().getLength());
+        currentConfigProperties.setExecChar(text.length() == 0 ? null : text.charAt(0));
     }
 }

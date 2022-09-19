@@ -1,10 +1,10 @@
-package com.zhmenko.dotatimer.gui.settings.frames;
+package com.zhmenko.dotatimer.gui.frames;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
+import com.zhmenko.dotatimer.gui.listeners.*;
 import com.zhmenko.dotatimer.gui.settings.documents.JTextFieldLimit;
-import com.zhmenko.dotatimer.gui.settings.frames.ExampleTextArea;
-import com.zhmenko.dotatimer.gui.settings.listeners.*;
+import com.zhmenko.dotatimer.gui.listeners.*;
 import com.zhmenko.dotatimer.setting.Config;
 import com.zhmenko.dotatimer.setting.ConfigProperties;
 import lombok.SneakyThrows;
@@ -69,9 +69,9 @@ public class SettingsFrame extends JFrame implements ActionListener {
         this.usingColonCheckBox.addActionListener(new UsingColonCheckBoxActionListener(currentConfigProperties, exampleOutputTextArea));
 
 
-
         executeKeyTextField.setDocument(new JTextFieldLimit(1));
-        this.executeKeyTextField.setText(currentConfigProperties.getExecChar().toString());
+        Character execChar = currentConfigProperties.getExecChar();
+        this.executeKeyTextField.setText(execChar == null ? null : execChar.toString());
         this.executeKeyTextField
                 .getDocument()
                 .addDocumentListener(new ExecCharacterTextFieldActionListener(currentConfigProperties));
@@ -84,7 +84,7 @@ public class SettingsFrame extends JFrame implements ActionListener {
             config.setConfigProperties(currentConfigProperties);
             config.writeConfigToFile();
         }
-        log.info("Saving config: " + config.getConfigProperties().toString());
+        log.debug("Saving config: " + config.getConfigProperties().toString());
     }
 
     {
@@ -153,7 +153,7 @@ public class SettingsFrame extends JFrame implements ActionListener {
         settingsPanel.add(usingColonCheckBox, cc.xy(1, 13));
         executeKeyTextField = new JTextField();
         executeKeyTextField.setColumns(2);
-        executeKeyTextField.setEditable(false);
+        executeKeyTextField.setEditable(true);
         executeKeyTextField.setHorizontalAlignment(0);
         executeKeyTextField.setText("");
         settingsPanel.add(executeKeyTextField, cc.xyw(1, 17, 5, CellConstraints.LEFT, CellConstraints.FILL));

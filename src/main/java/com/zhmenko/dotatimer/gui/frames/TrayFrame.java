@@ -1,4 +1,4 @@
-package com.zhmenko.dotatimer.gui.settings.frames;
+package com.zhmenko.dotatimer.gui.frames;
 
 import com.zhmenko.dotatimer.setting.Config;
 import lombok.SneakyThrows;
@@ -26,6 +26,7 @@ public class TrayFrame {
         PopupMenu trayMenu = new PopupMenu();
         MenuItem settingsItem = new MenuItem("Settings");
         settingsItem.addActionListener(e -> {
+            if (settingsFrame != null && settingsFrame.isVisible()) return;
             log.info(this.config.toString());
             settingsFrame = new SettingsFrame(this.config);
             settingsFrame.setVisible(true);

@@ -1,15 +1,19 @@
-package com.zhmenko.dotatimer.gui.settings.listeners;
+package com.zhmenko.dotatimer.gui.listeners;
 
-import com.zhmenko.dotatimer.gui.settings.frames.ExampleTextArea;
+import com.zhmenko.dotatimer.gui.frames.ExampleTextArea;
 import com.zhmenko.dotatimer.setting.ConfigProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.Element;
+import java.awt.*;
+import java.text.MessageFormat;
 
 @RequiredArgsConstructor
-public class BeforeRightRoshanTextFieldActionListener implements DocumentListener {
+public class BeforeAegisTextFieldActionListener implements DocumentListener {
     private final ConfigProperties currentConfigProperties;
     private final ExampleTextArea exampleOutputTextArea;
 
@@ -23,7 +27,6 @@ public class BeforeRightRoshanTextFieldActionListener implements DocumentListene
         action(e);
     }
 
-
     @Override
     public void changedUpdate(DocumentEvent e) {
         action(e);
@@ -32,7 +35,8 @@ public class BeforeRightRoshanTextFieldActionListener implements DocumentListene
     @SneakyThrows
     private void action(DocumentEvent e) {
         currentConfigProperties
-                .setStringBeforeRoshanRecoveryRightTime(e.getDocument().getText(0, e.getDocument().getLength()));
+                .setStringBeforeAegisExpiredTime(e.getDocument().getText(0,e.getDocument().getLength()));
+
         exampleOutputTextArea.updateTextAreaText(currentConfigProperties);
     }
 }

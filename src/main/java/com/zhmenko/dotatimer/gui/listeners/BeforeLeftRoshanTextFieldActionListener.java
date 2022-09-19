@@ -1,6 +1,6 @@
-package com.zhmenko.dotatimer.gui.settings.listeners;
+package com.zhmenko.dotatimer.gui.listeners;
 
-import com.zhmenko.dotatimer.gui.settings.frames.ExampleTextArea;
+import com.zhmenko.dotatimer.gui.frames.ExampleTextArea;
 import com.zhmenko.dotatimer.setting.ConfigProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
