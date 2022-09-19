@@ -10,6 +10,8 @@
     <packaging>jar</packaging>
     <properties>
         <fileName>Dota Timer</fileName>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <dependencies>
@@ -18,23 +20,18 @@
             <artifactId>jnativehook</artifactId>
             <version>2.2.2</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.github.mrbean355</groupId>
-            <artifactId>dota2-gsi</artifactId>
-            <version>1.1.0</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/com.ibasco.agql/agql-dota2-webapi -->
         <dependency>
             <groupId>com.ibasco.agql</groupId>
             <artifactId>agql-dota2-webapi</artifactId>
             <version>1.0.0</version>
         </dependency>
-        <dependency>
+
+<!--        <dependency>
             <groupId>com.jgoodies</groupId>
             <artifactId>forms</artifactId>
             <version>1.2.1</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -46,13 +43,13 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
+            <version>1.2.9</version>
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.13.1</version>
+            <version>2.13.2.1</version>
         </dependency>
 
         <dependency>
@@ -92,6 +89,7 @@
             <plugin>
                 <groupId>com.akathist.maven.plugins.launch4j</groupId>
                 <artifactId>launch4j-maven-plugin</artifactId>
+                <version>2.1.2</version>
                 <executions>
                     <execution>
                         <id>l4j-clui</id>
@@ -101,6 +99,7 @@
                             <headerType>gui</headerType>
                             <outfile>target/DotaTimer.exe</outfile>
                             <jar>target/${fileName}.jar</jar>
+                            <icon>src/main/resources/images/whiteDotaIcon.ico</icon>
                             <classPath>
                                 <mainClass>com.zhmenko.dotatimer.main.MainKeyHookApp</mainClass>
                             </classPath>
