@@ -1,12 +1,11 @@
 package com.zhmenko.dotatimer.main;
 
-import com.zhmenko.dotatimer.gsi.DotaGSI;
-import com.zhmenko.dotatimer.gui.settings.frames.TrayFrame;
-/*import com.zhmenko.dotatimer.servlet.ServletThread;*/
-import com.zhmenko.dotatimer.setting.Config;
-import com.zhmenko.dotatimer.keyboard.MessageConverter;
 
-import java.io.*;
+import com.zhmenko.dotatimer.gsi.DotaGSIServerWrapper;
+import com.zhmenko.dotatimer.gui.frames.TrayFrame;
+import com.zhmenko.dotatimer.setting.Config;
+
+import java.io.File;
 
 public class MainKeyHookApp {
     private static final int GSI_PORT = 47471;
@@ -19,11 +18,11 @@ public class MainKeyHookApp {
 
         // define config file
         Config config = new Config(configFile);
-        // init GSI server listener
-        DotaGSI dotaGSI = new DotaGSI(GSI_PORT);
-        // init hook process
-        applicationLifecycle.keyboardListenerInit(config, dotaGSI);
         // init tray icon
         new TrayFrame(config);
+        // init gsi server listener
+        DotaGSIServerWrapper dotaGsiServer = new DotaGSIServerWrapper(GSI_PORT);
+        // init global keyboard listeer
+        applicationLifecycle.keyboardListenerInit(config, dotaGsiServer);
     }
 }

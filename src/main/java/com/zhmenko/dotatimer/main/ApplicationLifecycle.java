@@ -2,25 +2,17 @@ package com.zhmenko.dotatimer.main;
 
 import com.github.kwhat.jnativehook.GlobalScreen;
 import com.github.kwhat.jnativehook.NativeHookException;
-import com.zhmenko.dotatimer.fileflag.FlagThread;
-import com.zhmenko.dotatimer.gsi.DotaGSI;
+import com.zhmenko.dotatimer.gsi.DotaGSIServerWrapper;
 import com.zhmenko.dotatimer.keyboard.GlobalKeyboardListener;
-import com.zhmenko.dotatimer.keyboard.MessageConverter;
 import com.zhmenko.dotatimer.setting.Config;
 import lombok.extern.slf4j.Slf4j;
 
-import java.awt.*;
 import java.io.File;
 import java.net.URISyntaxException;
 
 @Slf4j
 public class ApplicationLifecycle {
-    public void flagCheckThreadInit(File flagFile, long frequency) {
-        Thread flagCheckThread = new FlagThread(flagFile, frequency);
-        flagCheckThread.start();
-    }
-
-    public void keyboardListenerInit(Config config, DotaGSI dotaGSI) throws AWTException {
+    public void keyboardListenerInit(Config config, DotaGSIServerWrapper dotaGSIServerWrapper) {
         try {
             GlobalScreen.registerNativeHook();
         } catch (NativeHookException ex) {
@@ -28,7 +20,7 @@ public class ApplicationLifecycle {
             System.exit(1);
         }
 
-        GlobalScreen.addNativeKeyListener(new GlobalKeyboardListener(config,dotaGSI));
+        GlobalScreen.addNativeKeyListener(new GlobalKeyboardListener(config, dotaGSIServerWrapper));
     }
 
     public File getAppDirPath() throws URISyntaxException {
