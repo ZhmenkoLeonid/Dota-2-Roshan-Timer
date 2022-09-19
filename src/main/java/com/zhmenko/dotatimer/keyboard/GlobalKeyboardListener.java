@@ -3,24 +3,23 @@ package com.zhmenko.dotatimer.keyboard;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 
-import com.zhmenko.dotatimer.gsi.DotaGSI;
+import com.zhmenko.dotatimer.gsi.DotaGSIServerWrapper;
+import com.zhmenko.dotatimer.keyboard.mapper.KeyCharMapper;
 import com.zhmenko.dotatimer.setting.Config;
+import lombok.extern.slf4j.Slf4j;
 
-import java.awt.*;
-
+@Slf4j
 public class GlobalKeyboardListener implements NativeKeyListener {
-    private Robot rb;
     private final MessageConverter messageConverter;
     private final ClipboardService clipboardService;
-    private final DotaGSI dotaGSI;
+    private final DotaGSIServerWrapper dotaGSIServerWrapper;
     private final Config config;
 
-    public GlobalKeyboardListener(Config config, DotaGSI dotaGSI) throws AWTException {
+    public GlobalKeyboardListener(Config config, DotaGSIServerWrapper dotaGSIServerWrapper) {
         this.messageConverter = new MessageConverter(config);
-        this.dotaGSI = dotaGSI;
+        this.dotaGSIServerWrapper = dotaGSIServerWrapper;
         this.config = config;
         clipboardService = new ClipboardService();
-        rb = new Robot();
     }
 
     @Override
@@ -30,37 +29,16 @@ public class GlobalKeyboardListener implements NativeKeyListener {
     @Override
     public void nativeKeyPressed(NativeKeyEvent nativeEvent) {
         // TODO нормальное соответствие кодов символов
-        System.out.println("raw:" + NativeKeyEvent.getModifiersText(nativeEvent.getModifiers()) +" char: "+  (int)config.getConfigProperties().getExecChar());
-
-        if (nativeEvent.getKeyCode() == 0xe4e || nativeEvent.getKeyCode() == NativeKeyEvent.VC_EQUALS) {
-/*          // ctrl+a
-            rb.delay(operationDelay);
-            rb.keyPress(KeyEvent.VK_CONTROL);
-            rb.keyPress(KeyEvent.VK_A);
-            rb.keyRelease(KeyEvent.VK_A);
-            rb.keyRelease(KeyEvent.VK_CONTROL);
-            //ctrl+c
-            rb.keyPress(KeyEvent.VK_CONTROL);
-            rb.keyPress(KeyEvent.VK_C);
-            rb.keyRelease(KeyEvent.VK_C);
-            rb.keyRelease(KeyEvent.VK_CONTROL);
-            rb.delay(operationDelay);
-            // получаем данные из буфера обмена
-            String strFromPyperClip = textTransfer.getData();*/
-
+        //System.out.println("raw:" + nativeEvent.getKeyCode() +" char: "+  (int)config.getConfigProperties().getExecChar());
+        Character configChar = config.getConfigProperties().getExecChar();
+        Character inputChar = KeyCharMapper.map(nativeEvent.getKeyCode());
+        log.debug("Получен код: \"" + nativeEvent.getKeyCode() + "\"");
+        if (inputChar != null && inputChar == configChar) {
+            log.debug("Вызван запуск. Клавиша: \"" + configChar + "\"");
             // обрабатываем и получаем тайминги
-            String resultStr = messageConverter.convert(dotaGSI.getCurrentClockTime());
+            String resultStr = messageConverter.convert(dotaGSIServerWrapper.getCurrentClockTime());
             // закидываем в буфер обмена
             clipboardService.setData(resultStr);
-            //rb.delay(operationDelay);
-
-            // ctrl+v
-/*            rb.keyPress(KeyEvent.VK_BACK_SPACE);
-            rb.keyRelease(KeyEvent.VK_BACK_SPACE);
-            rb.keyPress(KeyEvent.VK_CONTROL);
-            rb.keyPress(KeyEvent.VK_V);
-            rb.keyRelease(KeyEvent.VK_V);
-            rb.keyRelease(KeyEvent.VK_CONTROL);*/
         }
     }
 

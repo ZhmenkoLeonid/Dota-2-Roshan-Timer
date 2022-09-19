@@ -4,15 +4,12 @@ import com.zhmenko.dotatimer.setting.Config;
 import com.zhmenko.dotatimer.setting.ConfigProperties;
 
 import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
 
 public class MessageConverter {
-    private Config config;
-    private SimpleDateFormat simpleDateFormat;
+    private final Config config;
 
     public MessageConverter(Config config) {
         this.config = config;
-        this.simpleDateFormat = new SimpleDateFormat("mmm:ss");
     }
 
     @Deprecated
@@ -26,10 +23,10 @@ public class MessageConverter {
     }
 
     public String convert(long clockTimeSeconds) {
-        //                                                  Учитываем задержку сервера GSI
-        //                                                                        |
-        //                                                                        v
-        return buildString(clockTimeSeconds / 60, (clockTimeSeconds + 1) % 60);
+        //                                             Учитываем задержку сервера GSI
+        //                                         |                                    |
+        //                                         v                                    v
+        return buildString((clockTimeSeconds + 1) / 60, (clockTimeSeconds + 1) % 60);
     }
 
     @Deprecated
@@ -37,21 +34,20 @@ public class MessageConverter {
         int min = -1;
         int seconds = -1;
 
-        String resultStr;
         if (str.length() == 5 && str.charAt(0) <= '9' && str.charAt(0) >= '0'
                 && str.charAt(1) <= '9' && str.charAt(1) >= '0'
                 && str.charAt(2) <= '9' && str.charAt(2) >= '0' && str.charAt(3)
                 <= '9' && str.charAt(3) >= '0') {
-            min = intFromChar(str.charAt(0)) * 10 + intFromChar(str.charAt(1));
-            seconds = intFromChar(str.charAt(2)) * 10 + intFromChar(str.charAt(3));
+            min = atoi(str.charAt(0)) * 10 + atoi(str.charAt(1));
+            seconds = atoi(str.charAt(2)) * 10 + atoi(str.charAt(3));
         } else if (str.length() == 6 && str.charAt(0) <= '9' && str.charAt(0)
                 >= '0' && str.charAt(1) <= '9' &&
                 str.charAt(1) >= '0' && str.charAt(2) <= '9' && str.charAt(2)
                 >= '0' && str.charAt(3) <= '9'
                 && str.charAt(3) >= '0' && str.charAt(4) <= '9' & str.charAt(4) >= '0') {
-            min = intFromChar(str.charAt(0)) * 100 + intFromChar(str.charAt(1)) * 10
-                    + intFromChar(str.charAt(2));
-            seconds = intFromChar(str.charAt(3)) * 10 + intFromChar(str.charAt(4));
+            min = atoi(str.charAt(0)) * 100 + atoi(str.charAt(1)) * 10
+                    + atoi(str.charAt(2));
+            seconds = atoi(str.charAt(3)) * 10 + atoi(str.charAt(4));
         }
         if (min == -1 || seconds == -1) {
             return "";
@@ -68,16 +64,16 @@ public class MessageConverter {
                 && str.charAt(1) <= '9' && str.charAt(1) >= '0'
                 && str.charAt(2) <= '9' && str.charAt(2) >= '0' && str.charAt(3)
                 <= '9' && str.charAt(3) >= '0') {
-            min = intFromChar(str.charAt(0)) * 10 + intFromChar(str.charAt(1));
-            seconds = intFromChar(str.charAt(2)) * 10 + intFromChar(str.charAt(3));
+            min = atoi(str.charAt(0)) * 10 + atoi(str.charAt(1));
+            seconds = atoi(str.charAt(2)) * 10 + atoi(str.charAt(3));
         } else if (str.length() == 5 && str.charAt(0) <= '9' && str.charAt(0)
                 >= '0' && str.charAt(1) <= '9' &&
                 str.charAt(1) >= '0' && str.charAt(2) <= '9' && str.charAt(2)
                 >= '0' && str.charAt(3) <= '9'
                 && str.charAt(3) >= '0' && str.charAt(4) <= '9' & str.charAt(4) >= '0') {
-            min = intFromChar(str.charAt(0)) * 100 + intFromChar(str.charAt(1)) * 10
-                    + intFromChar(str.charAt(2));
-            seconds = intFromChar(str.charAt(3)) * 10 + intFromChar(str.charAt(4));
+            min = atoi(str.charAt(0)) * 100 + atoi(str.charAt(1)) * 10
+                    + atoi(str.charAt(2));
+            seconds = atoi(str.charAt(3)) * 10 + atoi(str.charAt(4));
         }
         if (min == -1 || seconds == -1) {
             return "";
@@ -90,8 +86,6 @@ public class MessageConverter {
 
         String symbolBetweenTime = configProperties.isUsingColon() ? ":" : "";
 
-        String roshanKilled = writeZeroIfMsgLenEq1(min) + symbolBetweenTime
-                + writeZeroIfMsgLenEq1(seconds);
         String aegis = writeZeroIfMsgLenEq1(min + 5) + symbolBetweenTime
                 + writeZeroIfMsgLenEq1(seconds);
         String roshanRecoveryMinimum = writeZeroIfMsgLenEq1(min + 8) + symbolBetweenTime
@@ -113,7 +107,7 @@ public class MessageConverter {
         return num / 10 >= 1 ? numStr : "0" + numStr;
     }
 
-    private int intFromChar(char symbol) {
+    private int atoi(char symbol) {
         return symbol - '0';
     }
 }
