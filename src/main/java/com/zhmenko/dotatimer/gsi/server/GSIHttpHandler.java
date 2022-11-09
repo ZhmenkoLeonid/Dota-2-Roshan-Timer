@@ -10,19 +10,19 @@ import java.io.InputStreamReader;
 abstract public class GSIHttpHandler extends Broker implements HttpHandler {
     protected String readRequestBody(HttpExchange exchange) {
         StringBuilder request = new StringBuilder();
-        StringBuilder requestLines = new StringBuilder();
+        //StringBuilder requestLines = new StringBuilder();
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
             String inl;
             while ((inl = in.readLine()) != null) {
                 request.append(inl);
-                requestLines.append(inl).append(System.lineSeparator());
+                //requestLines.append(inl).append(System.lineSeparator());
             }
             in.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(requestLines.toString());
+        //System.out.println(requestLines.toString());
         return request.toString();
     }
 }

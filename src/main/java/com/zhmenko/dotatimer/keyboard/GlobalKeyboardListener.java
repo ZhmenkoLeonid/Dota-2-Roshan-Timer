@@ -32,7 +32,7 @@ public class GlobalKeyboardListener implements NativeKeyListener {
         //System.out.println("raw:" + nativeEvent.getKeyCode() +" char: "+  (int)config.getConfigProperties().getExecChar());
         Character configChar = config.getConfigProperties().getExecChar();
         Character inputChar = KeyCharMapper.map(nativeEvent.getKeyCode());
-        log.debug("Получен код: \"" + nativeEvent.getKeyCode() + "\"");
+        //log.debug("Получен код: \"" + nativeEvent.getKeyCode() + "\"");
         if (inputChar != null && inputChar == configChar) {
             log.debug("Вызван запуск. Клавиша: \"" + configChar + "\"");
             // обрабатываем и получаем тайминги

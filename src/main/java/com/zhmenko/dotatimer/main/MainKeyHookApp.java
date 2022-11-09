@@ -1,6 +1,5 @@
 package com.zhmenko.dotatimer.main;
 
-
 import com.zhmenko.dotatimer.gsi.DotaGSIServerWrapper;
 import com.zhmenko.dotatimer.gui.frames.TrayFrame;
 import com.zhmenko.dotatimer.setting.Config;
@@ -12,7 +11,6 @@ public class MainKeyHookApp {
 
     public static void main(String[] args) throws Exception {
         ApplicationLifecycle applicationLifecycle = new ApplicationLifecycle();
-
         File appDir = applicationLifecycle.getAppDirPath();
         File configFile = new File(appDir + "\\config.cfg");
 
@@ -22,7 +20,7 @@ public class MainKeyHookApp {
         new TrayFrame(config);
         // init gsi server listener
         DotaGSIServerWrapper dotaGsiServer = new DotaGSIServerWrapper(GSI_PORT);
-        // init global keyboard listeer
+        // init global keyboard listener
         applicationLifecycle.keyboardListenerInit(config, dotaGsiServer);
     }
 }

@@ -22,6 +22,7 @@ public class Player{
 	@JsonProperty("team_name")
 	private String teamName;
 	private String steamid;
+	private String accountid;
 	@JsonProperty("kill_list")
 	private java.util.Map<String, String> killList;
 	private int gold;
