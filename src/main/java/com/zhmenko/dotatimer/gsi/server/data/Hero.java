@@ -7,7 +7,8 @@ import lombok.Data;
 public class Hero{
 	private boolean silenced;
 	private boolean disarmed;
-	private int ypos;
+	@JsonProperty("ypos")
+	private int yPos;
 	private boolean alive;
 	@JsonProperty("max_mana")
 	private int maxMana;
@@ -59,44 +60,6 @@ public class Hero{
 	private boolean talent7;
 	@JsonProperty("talent_8")
 	private boolean talent8;
+	@JsonProperty("attributes_level")
+	private long attributesLevel;
 }
-
-/*
-	"hero": {
-		"xpos": -6700,
-		"ypos": -6700,
-		"id": 33,
-		"name": "npc_dota_hero_enigma",
-		"level": 1,
-		"xp": 12,
-		"alive": true,
-		"respawn_seconds": 0,
-		"buyback_cost": 286,
-		"buyback_cooldown": 0,
-		"health": 620,
-		"max_health": 620,
-		"health_percent": 100,
-		"mana": 303,
-		"max_mana": 303,
-		"mana_percent": 100,
-		"silenced": false,
-		"stunned": false,
-		"disarmed": false,
-		"magicimmune": false,
-		"hexed": false,
-		"muted": false,
-		"break": false,
-		"aghanims_scepter": false,
-		"aghanims_shard": false,
-		"smoked": false,
-		"has_debuff": false,
-		"talent_1": false,
-		"talent_2": false,
-		"talent_3": false,
-		"talent_4": false,
-		"talent_5": false,
-		"talent_6": false,
-		"talent_7": false,
-		"talent_8": false
-	}
- */
