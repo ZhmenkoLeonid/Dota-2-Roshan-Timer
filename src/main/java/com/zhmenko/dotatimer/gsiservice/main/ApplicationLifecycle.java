@@ -5,7 +5,10 @@ import com.github.kwhat.jnativehook.NativeHookException;
 import com.zhmenko.dotatimer.gsiservice.gsi.DotaGSIServerWrapper;
 import com.zhmenko.dotatimer.gsiservice.keyboard.GlobalKeyboardListener;
 import com.zhmenko.dotatimer.gsiservice.setting.Config;
+import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.net.URISyntaxException;

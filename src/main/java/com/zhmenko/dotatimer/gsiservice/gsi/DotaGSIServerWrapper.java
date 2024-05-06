@@ -5,6 +5,7 @@ import com.zhmenko.dotatimer.gsiservice.gsi.server.GSIServer;
 import com.zhmenko.dotatimer.gsiservice.gsi.server.data.DotaGameState;
 import com.zhmenko.dotatimer.gsiservice.subscription.Subscription;
 import lombok.Getter;
+import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
